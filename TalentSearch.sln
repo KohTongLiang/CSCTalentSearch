@@ -5,6 +5,28 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentSearch", "TalentSearch\TalentSearch.csproj", "{B858A499-8C43-45C7-8A29-9D1C939597E3}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CSCEmailWebService(1)", "..\..\..\Visual Studio 2015\CSCEmailWebService\", "{5C0E685D-4644-42B1-82D6-0C158B0721FD}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_4881"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\Visual Studio 2015\CSCEmailWebService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4881\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_4881"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\Visual Studio 2015\CSCEmailWebService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4881\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "4881"
+		SlnRelativePath = "..\..\..\Visual Studio 2015\CSCEmailWebService\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +37,10 @@ Global
 		{B858A499-8C43-45C7-8A29-9D1C939597E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B858A499-8C43-45C7-8A29-9D1C939597E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B858A499-8C43-45C7-8A29-9D1C939597E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C0E685D-4644-42B1-82D6-0C158B0721FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C0E685D-4644-42B1-82D6-0C158B0721FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C0E685D-4644-42B1-82D6-0C158B0721FD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C0E685D-4644-42B1-82D6-0C158B0721FD}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
