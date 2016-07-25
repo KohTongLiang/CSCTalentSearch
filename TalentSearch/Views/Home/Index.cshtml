@@ -1,0 +1,304 @@
+﻿@section Scripts {
+    @Scripts.Render("~/bundles/script")
+}
+@{
+    ViewBag.Title = "Talent Search";
+}
+
+<div class="container">
+
+    <br /><br />
+
+    <div class="row col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h1 class="panel-title customheader"><span class="glyphicon glyphicon-search"></span> Live Search</h1>
+                <span class="customerheader2">Register &amp; Login to Add/Update/Delete talents</span>
+            </div>
+            <div class="form-inline panel-body text-center">
+                <input id="search" style="margin-left:10px; margin-right: 10px; width: 100%; max-width: 600px; padding: 5px; text-align: center;" name="search" type="text" placeholder="Enter the Name or Info about a speaker" class="form-control input-md">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr />
+
+<div class="container" id="addarea">
+    <div class="row col-md-10 col-md-offset-1">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><span class="glyphicon glyphicon-plus"></span> Add</button>
+    </div>
+</div>
+
+<div class="container" id="results">
+
+    @*<div class="row col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Barot Bellingham (Royal Academy of Painting and Sculpture)
+                    </h3>
+                    <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteModal" data-talentid="1"><span class="glyphicon glyphicon-trash"></span></button>
+                    <button class="btn btn-warning pull-right" data-toggle="modal" data-target="#editModal" data-talentid="1"><span class="glyphicon glyphicon-edit"></span></button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <img src="http://res.cloudinary.com/talentsearch/image/upload/v1466085085/talents/Barot_Bellingham.jpg" alt="Barot Bellingham">
+                    <p>Barot has just finished his final year at The Royal Academy of Painting and Sculpture, where he excelled in glass etching paintings and portraiture. Hailed as one of the most diverse artists of his generation, Barot is equally as skilled with watercolors as he is with oils, and is just as well-balanced in different subject areas. Barot's collection entitled "The Un-Collection" will adorn the walls of Gilbert Hall, depicting his range of skills and sensibilities - all of them, uniquely Barot, yet undeniably different</p>
+                </div>
+            </div>
+        </div>*@
+
+</div>
+
+
+<!-- adding new new talent -->
+<div id="addModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" enctype="multipart/form-data">
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="addName">Name</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="addName" name="addName" type="text" placeholder="Michael Bay" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="addShortName">Short Name</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="addShortName" name="addShortName" type="text" placeholder="Michael_Bay" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="addReknown">Reknown</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="addReknown" name="addReknown" type="text" placeholder="Movie Director and Visual FX Expert" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="addImage">Link to Image</label>
+                        <div class="col-md-4">
+                            @*<input maxlength="1000" id="addImage" name="addImage" type="text" placeholder="http://placehold.it/160x160" class="form-control input-md" required="">*@
+                            <input type="file" id="addImage" name="addImage" class="form-control input-md" required />
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="addBio">Bio</label>
+                        <div class="col-md-4">
+                            <textarea maxlength="10000" rows="12" placeholder="Description" class="form-control" id="addBio" name="addBio"></textarea>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="btnAdd" name="btnAdd" type="button" class="btn btn-success">Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- editing talents-->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="editName">Name</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="editName" name="editName" type="text" placeholder="Michael Bay" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="editShortName">Short Name</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="editShortName" name="editShortName" type="text" placeholder="Michael_Bay" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="editReknown">Reknown</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="editReknown" name="editReknown" type="text" placeholder="Movie Director and Visual FX Expert" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="editImage">Link to Image</label>
+                        <div class="col-md-4">
+                            <input maxlength="1000" id="editImage" name="editImage" type="text" placeholder="http://placehold.it/160x160" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="editBio">Bio</label>
+                        <div class="col-md-4">
+                            <textarea maxlength="10000" rows="12" placeholder="Description" class="form-control" id="editBio" name="editBio"></textarea>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="btnSave" name="btnSave" type="button" class="btn btn-success">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--deleting talents-->
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h2>Are you sure you want to delete this?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                <button id="btnDelete" name="btnDelete" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--Update account-->
+<div id="updateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Account</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+
+                    <!--User name-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="updateUsername">Update Username</label>
+                        <div class="col-md-4">
+                            <input maxlength="200" id="updateUsername" name="updateUsername" type="text" placeholder="Bob Forever Ahing" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="btnUpdate" name="btnUpdate" type="button" class="btn btn-success">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Update password-->
+<div id="updatePasswordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Account</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+
+                    <!-- Text input-->
+                    <!-- Old Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="oldPassword">Old Password</label>
+                        <div class="col-md-4">
+                            <input maxlength="100" id="oldPassword" name="oldPassword" type="password" placeholder="Password" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+
+                    <!-- Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="updatePassword">Password</label>
+                        <div class="col-md-4">
+                            <input maxlength="100" id="updatePassword" name="updatePassword" type="password" placeholder="Password" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="updatePassword2">Confirm Password</label>
+                        <div class="col-md-4">
+                            <input maxlength="100" id="updatePassword2" name="updatePassword2" type="password" placeholder="Password" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="btnUpdatePassword" name="btnUpdatePassword" type="button" class="btn btn-success">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("LoginRegisterModals")

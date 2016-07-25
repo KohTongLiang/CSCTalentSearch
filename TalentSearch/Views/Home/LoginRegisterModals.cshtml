@@ -1,0 +1,71 @@
+﻿<!--register modal-->
+<div id="registerModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Register Account</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/home/validatecaptcha" class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <div id="grecaptcha" class="g-recaptcha" data-sitekey="6LdU2SUTAAAAADhTTCXY-L7Uog_Y-znxsfEfMKUt"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="validate" type="submit" class="btn-default" value="Submit">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--logging into account-->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="loginUsername">Username</label>
+                        <div class="col-md-4">
+                            <input maxlength="200" id="loginUsername" name="loginUsername" type="text" placeholder="Bob Forever Ahhing" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="registerPassword1">Password</label>
+                        <div class="col-md-4">
+                            <input maxlength="100" id="loginPassword" name="loginPassword" type="password" placeholder="Password" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="btnLogin" name="btnLogin" type="button" class="btn btn-success">Login</button>
+            </div>
+        </div>
+
+    </div>
+</div>

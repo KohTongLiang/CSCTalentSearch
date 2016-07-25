@@ -1,0 +1,47 @@
+﻿@section Scripts {
+    @Scripts.Render("~/bundles/script")
+}
+@{
+    ViewBag.Title = "Talent Search account registration";
+}
+<form class="form-horizontal">
+    <h2>Register an account</h2>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="registerEmail">Email</label>
+        <div class="col-md-4">
+            <input maxlength="200" id="registerEmail" name="registerEmail" type="text" placeholder="example@example.com" class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <!-- Password input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="registerPassword1">Password</label>
+        <div class="col-md-4">
+            <input maxlength="100" id="registerPassword1" name="registerPassword1" type="password" placeholder="Password" class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <!-- Password input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="registerPassword2">Confirm Password</label>
+        <div class="col-md-4">
+            <input maxlength="100" id="registerPassword2" name="registerPassword2" type="password" placeholder="Password" class="form-control input-md" required="">
+            <span class="help-block">6-100 characters, have capital and small letters, have at least 1 number and special character (e.g. Password1!)</span>
+        </div>
+    </div>
+
+    <!--User name-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="registerEmail">Username</label>
+        <div class="col-md-4">
+            <input maxlength="200" id="registerUsername" name="registerUsername" type="text" placeholder="Bob Forever Ahing" class="form-control input-md" required="">
+        </div>
+    </div>
+</form>
+
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<button id="btnRegister" name="btnRegister" type="button" class="btn btn-success">Register</button>
+
+@Html.Partial("LoginRegisterModals")
