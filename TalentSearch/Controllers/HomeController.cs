@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using TalentSearch.Models;
 
@@ -7,6 +9,13 @@ namespace TalentSearch.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Test()
+        {
+            ViewBag.Title = "Test";
+
+            return View();
+        }
+
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
@@ -64,6 +73,26 @@ namespace TalentSearch.Controllers
             }
 
             return View("Register");
+        }
+
+        // GET: /Account/ConfirmEmail
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            //var result = await Microsoft.AspNet.Identity.UserManager.ConfirmEmailAsync(userId, code);
+            //return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (Session["emailConfirm"].Equals(code))
+            {
+                return View();
+            }
+            else
+            {
+                return View("Error");
+            }
         }
     }//end of class
 }

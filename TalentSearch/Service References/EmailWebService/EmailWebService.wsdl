@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="Send">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="msgFrom" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="msgTo" nillable="true" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msgSubject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msgBody" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendGmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="msgFrom" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="msgTo" nillable="true" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msgSubject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msgBody" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendGmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendGmailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSoapIn">
+    <wsdl:part name="parameters" element="tns:Send" />
+  </wsdl:message>
+  <wsdl:message name="SendSoapOut">
+    <wsdl:part name="parameters" element="tns:SendResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailSoapIn">
+    <wsdl:part name="parameters" element="tns:SendGmail" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailSoapOut">
+    <wsdl:part name="parameters" element="tns:SendGmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendHttpGetIn">
+    <wsdl:part name="msgFrom" type="s:string" />
+    <wsdl:part name="msgTo" type="s:string" />
+    <wsdl:part name="msgSubject" type="s:string" />
+    <wsdl:part name="msgBody" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailHttpGetIn">
+    <wsdl:part name="msgFrom" type="s:string" />
+    <wsdl:part name="msgTo" type="s:string" />
+    <wsdl:part name="msgSubject" type="s:string" />
+    <wsdl:part name="msgBody" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SendHttpPostIn">
+    <wsdl:part name="msgFrom" type="s:string" />
+    <wsdl:part name="msgTo" type="s:string" />
+    <wsdl:part name="msgSubject" type="s:string" />
+    <wsdl:part name="msgBody" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailHttpPostIn">
+    <wsdl:part name="msgFrom" type="s:string" />
+    <wsdl:part name="msgTo" type="s:string" />
+    <wsdl:part name="msgSubject" type="s:string" />
+    <wsdl:part name="msgBody" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendGmailHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="EmailWebServiceSoap">
+    <wsdl:operation name="Send">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an SMTP mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendSoapIn" />
+      <wsdl:output message="tns:SendSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an Gmail mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendGmailSoapIn" />
+      <wsdl:output message="tns:SendGmailSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmailWebServiceHttpGet">
+    <wsdl:operation name="Send">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an SMTP mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendHttpGetIn" />
+      <wsdl:output message="tns:SendHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an Gmail mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendGmailHttpGetIn" />
+      <wsdl:output message="tns:SendGmailHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmailWebServiceHttpPost">
+    <wsdl:operation name="Send">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an SMTP mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendHttpPostIn" />
+      <wsdl:output message="tns:SendHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send an Gmail mail message</wsdl:documentation>
+      <wsdl:input message="tns:SendGmailHttpPostIn" />
+      <wsdl:output message="tns:SendGmailHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmailWebServiceSoap" type="tns:EmailWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Send">
+      <soap:operation soapAction="http://tempuri.org/Send" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <soap:operation soapAction="http://tempuri.org/SendGmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailWebServiceSoap12" type="tns:EmailWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Send">
+      <soap12:operation soapAction="http://tempuri.org/Send" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <soap12:operation soapAction="http://tempuri.org/SendGmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailWebServiceHttpGet" type="tns:EmailWebServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Send">
+      <http:operation location="/Send" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <http:operation location="/SendGmail" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailWebServiceHttpPost" type="tns:EmailWebServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Send">
+      <http:operation location="/Send" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGmail">
+      <http:operation location="/SendGmail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmailWebService">
+    <wsdl:port name="EmailWebServiceSoap" binding="tns:EmailWebServiceSoap">
+      <soap:address location="http://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailWebServiceSoap12" binding="tns:EmailWebServiceSoap12">
+      <soap12:address location="http://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailWebServiceHttpGet" binding="tns:EmailWebServiceHttpGet">
+      <http:address location="http://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailWebServiceHttpPost" binding="tns:EmailWebServiceHttpPost">
+      <http:address location="http://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

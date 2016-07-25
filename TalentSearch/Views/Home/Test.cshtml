@@ -1,0 +1,23 @@
+﻿<h4 class="text-center" id="toChange">s</h4>
+
+<button onclick="callAJAX()">CLICK!!!</button>
+
+<script>
+    function callAJAX() {
+        $('#toChange').text("HEEEEEE");
+        //$.ajax({
+        //    type: 'POST',
+        //    url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
+        //    //url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx',
+        //    //contentType: "application/soap+xml; charset=utf-8",
+        //    contentType: 'application/x-www-form-urlencoded',
+        //    data: 'msgFrom=donotreply@domaincom&msgTo=koh.tongliang@gmail.com&msgSubject=test&msgBody=tester',
+        //    //data: '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><SendGmail xmlns="http://tempuri.org/"><msgFrom>donotreply@domain.com</msgFrom><msgTo>koh.tongliang@gmail.com</msgTo><msgSubject>This is a test</msgSubject><msgBody>Testerino</msgBody></SendGmail></soap12:Body></soap12:Envelope>',
+        //    processData: false
+        //}).done(function (data) {
+        //    alert("Success");
+        //}).fail(function (data) {
+        //    alert("Fail " + data.statusText);
+        //});
+    }
+</script>

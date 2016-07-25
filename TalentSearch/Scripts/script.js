@@ -238,18 +238,7 @@ function showResults() {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-//$('#validate').click(function () {
-//    $.ajax({
-//        url: '@Url.Action("ValidateCaptcha", "Home")',
-//        type: "POST",
-//        dataType: "html"
-//    }).success(function () {
-//        alert("Success");
-//    });
-//}); 
+ 
 
 //to register
 $('#btnRegister').click(function () {
@@ -260,16 +249,32 @@ $('#btnRegister').click(function () {
         userName: $('#registerUsername').val()
     };
 
+    //ajax call to email web service for email confirmation
     $.ajax({
         type: 'POST',
-        url: '/api/Account/Register',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data)
-    }).done(function (data) {
-        alertDone('Successfully registered, welcome!');
-        window.location.replace("/home/index");
-    }).fail(function (data) {
-        alertDone('Password did not meet requirements, or email has already been used. Please try again.');
+        url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
+        contentType: 'application/x-www-form-urlencoded',
+        data: 'msgFrom=donotreply@domaincom&msgTo=' + data.Email +'&msgSubject=test&msgBody=tester',
+        processData: false
+    }).done(function () {
+        //alert("Email web service successfully called");
+        $('#feedback').text("Confirmation email has been sent. Registering you now...");
+
+        //if email web service successfully called, do registration service
+        $.ajax({
+            type: 'POST',
+            url: '/api/Account/Register',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (data) {
+            $('#feedback').text("Successfully registered, welcome! Redirecting you to main page...");
+            window.location.replace("/home/index");
+        }).fail(function (data) {
+            $('#badInput').text("Password did not meet requirements, or email/username has already been used. Please try again.");
+        });
+
+    }).fail(function () {
+        alert("Failed to send email.");
     });
 });
 
@@ -293,6 +298,7 @@ $('#btnUpdatePassword').click(function () {
         logout();
     }).fail(function (data) {
         alertDone('Failed to update password.');
+        $('#badPassword').text("Password failed to update. Please ensure new password is different from old one and confirmation password is same as new password.");
     });
 });
 
@@ -313,7 +319,7 @@ $('#btnUpdate').click(function () {
         alertDone('Successfully updated username! Please re-login with your username.');
         logout();
     }).fail(function (data) {
-        alertDone('Failed to update username.');
+        $('#badUsername').text('Username might have already been in used. Please try a more unique password.');
     });
 });
 
@@ -331,14 +337,13 @@ $('#btnLogin').click(function () {
         url: '/Token',
         data: loginData
     }).done(function (data) {
-
         sessionStorage.setItem('username', data.userName);
         sessionStorage.setItem('tokenKey', data.access_token);
         $('.modal').modal('hide');
         initializeNavbar();
 
     }).fail(function (data) {
-        alertDone('Invalid username or password. Please try again.');
+        $('#loginFeedback').text("Invalid username or password. Please try again.");
     });
 });
 

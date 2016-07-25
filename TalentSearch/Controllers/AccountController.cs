@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Xml;
 using TalentSearch.Models;
 using TalentSearch.Providers;
 using TalentSearch.Results;
