@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\tongliang\Documents\Visual Studio 2015\Projects\TalentSearch\TalentSearch\Models\TalentModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\tongliang\Documents\ST0280 CSC\ProjectFolder\TalentSearch\TalentSearch\Models\TalentsModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

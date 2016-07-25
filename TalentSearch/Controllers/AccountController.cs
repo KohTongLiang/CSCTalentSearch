@@ -351,7 +351,7 @@ namespace TalentSearch.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email, ConfirmationCode = model.ConfirmationCode, CodeExpiry = DateTime.Now };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -360,7 +360,7 @@ namespace TalentSearch.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return ResponseMessage(Request.CreateResponse("" + user.Id));//return user id as response message
         }
 
         // POST api/Account/RegisterExternal

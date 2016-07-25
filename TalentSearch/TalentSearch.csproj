@@ -253,42 +253,42 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InterfaceTalentRepository.cs" />
     <Compile Include="Models\Recaptcha.cs" />
     <Compile Include="Models\Talent.cs">
-      <DependentUpon>TalentModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TalentModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TalentModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TalentModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TalentModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TalentModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TalentModel.edmx</DependentUpon>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TalentRepository.cs" />
+    <Compile Include="Models\TalentsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TalentsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TalentsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TalentsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TalentsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TalentsModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -307,15 +307,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\TalentModel.Context.tt">
+    <Content Include="Models\TalentsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TalentModel.edmx</DependentUpon>
-      <LastGenOutput>TalentModel.Context.cs</LastGenOutput>
+      <DependentUpon>TalentsModel.edmx</DependentUpon>
+      <LastGenOutput>TalentsModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TalentModel.tt">
+    <Content Include="Models\TalentsModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TalentModel.edmx</DependentUpon>
-      <LastGenOutput>TalentModel.cs</LastGenOutput>
+      <DependentUpon>TalentsModel.edmx</DependentUpon>
+      <LastGenOutput>TalentsModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -343,12 +343,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\TalentModel.edmx">
+    <EntityDeploy Include="Models\TalentsModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TalentModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>TalentsModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TalentModel.edmx.diagram">
-      <DependentUpon>TalentModel.edmx</DependentUpon>
+    <Content Include="Models\TalentsModel.edmx.diagram">
+      <DependentUpon>TalentsModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CSCAss2TalentSearch - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

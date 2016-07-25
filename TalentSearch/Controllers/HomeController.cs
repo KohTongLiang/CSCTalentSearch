@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -9,6 +11,8 @@ namespace TalentSearch.Controllers
 {
     public class HomeController : Controller
     {
+        CSCAssignment2Entities db = new CSCAssignment2Entities();
+
         public ActionResult Test()
         {
             ViewBag.Title = "Test";
@@ -75,8 +79,9 @@ namespace TalentSearch.Controllers
             return View("Register");
         }
 
-        // GET: /Account/ConfirmEmail
+        // GET: /Home/ConfirmEmail
         [AllowAnonymous]
+        [Route("ConfirmEmail")]
         public ActionResult ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -85,7 +90,11 @@ namespace TalentSearch.Controllers
             }
             //var result = await Microsoft.AspNet.Identity.UserManager.ConfirmEmailAsync(userId, code);
             //return View(result.Succeeded ? "ConfirmEmail" : "Error");
-            if (Session["emailConfirm"].Equals(code))
+
+            AspNetUser user = db.AspNetUsers.ToList().Find(u => u.Id == userId);
+            TimeSpan time = new TimeSpan(0, 0, 20, 0);
+            DateTime expiryDateTime = (DateTime)user.CodeExpiry;
+            if (code == user.ConfirmationCode && expiryDateTime < (expiryDateTime.AddMinutes(time.Minutes)))
             {
                 return View();
             }

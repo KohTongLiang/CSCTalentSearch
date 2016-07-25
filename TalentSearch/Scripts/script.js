@@ -238,50 +238,68 @@ function showResults() {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
+
 
 //to register
 $('#btnRegister').click(function () {
-    var data = {
+    $('#feedback').text("...processing...");
+
+    //generating random code for email confirmation
+    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    var string_length = 30;
+    var confirmationCode = '';
+    for (var i = 0; i < string_length; i++) {
+        var rnum = Math.floor(Math.random() * chars.length);
+        confirmationCode += chars.substring(rnum, rnum + 1);
+    }
+
+    //data object to be sent
+    var sendData = {
         Email: $('#registerEmail').val(),
         Password: $('#registerPassword1').val(),
         ConfirmPassword: $('#registerPassword2').val(),
-        userName: $('#registerUsername').val()
+        userName: $('#registerUsername').val(),
+        ConfirmationCode: confirmationCode
     };
 
-    //ajax call to email web service for email confirmation
+    //if email web service successfully called, do registration service
     $.ajax({
         type: 'POST',
-        url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
-        contentType: 'application/x-www-form-urlencoded',
-        data: 'msgFrom=donotreply@domaincom&msgTo=' + data.Email +'&msgSubject=test&msgBody=tester',
-        processData: false
-    }).done(function () {
-        //alert("Email web service successfully called");
-        $('#feedback').text("Confirmation email has been sent. Registering you now...");
+        url: '/api/Account/Register',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(sendData)
+    }).done(function (data) {
 
-        //if email web service successfully called, do registration service
+        $('#feedback').text("Successfully registered, welcome! Sending confirmation email now...");
+
+        //retrieve id  from response message
+        //id return as response message
+        //alert("Data: " + data)
+
+        //ajax call to email web service for email confirmation
         $.ajax({
             type: 'POST',
-            url: '/api/Account/Register',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        }).done(function (data) {
-            $('#feedback').text("Successfully registered, welcome! Redirecting you to main page...");
+            url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
+            contentType: 'application/x-www-form-urlencoded',
+            data: 'msgFrom=donotreply@domaincom&msgTo=' + sendData.Email + '&msgSubject=Talent Service Email Confirmation&msgBody=Please visit https://cscass2talentsearch.azurewebsites.net/Home/ConfirmEmail/' + data + '/' + confirmationCode + ' within 20 minutes to confirm your email.',
+            processData: false
+        }).done(function () {
+            $('#feedback').text("Confirmation email has been sent. Redirecting you now...");
             window.location.replace("/home/index");
-        }).fail(function (data) {
-            $('#badInput').text("Password did not meet requirements, or email/username has already been used. Please try again.");
+        }).fail(function () {
+            alert("Failed to send email.");
         });
 
-    }).fail(function () {
-        alert("Failed to send email.");
+    }).fail(function (data) {
+        $('#badInput').text("Password did not meet requirements, or email/username has already been used. Please try again.");
+        alert("Error: " + data.responseText);
     });
 });
 
 //to update password
 $('#btnUpdatePassword').click(function () {
 
-    var data = {
+    var sendData = {
         OldPassword: $('#oldPassword').val(),
         NewPassword: $('#updatePassword').val(),
         ConfirmPassword: $('#updatePassword2').val(),
@@ -292,7 +310,7 @@ $('#btnUpdatePassword').click(function () {
         headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('tokenKey') },
         url: '/api/Account/ChangePassword',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data)
+        data: JSON.stringify(sendData)
     }).done(function (data) {
         alertDone('Successfully updated password! Please re-login with your new password.');
         logout();
@@ -305,7 +323,7 @@ $('#btnUpdatePassword').click(function () {
 //to update username
 $('#btnUpdate').click(function () {
 
-    var data = {
+    var sendData = {
         UserName: $('#updateUsername').val()
     };
 
@@ -314,7 +332,7 @@ $('#btnUpdate').click(function () {
         headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('tokenKey') },
         url: '/api/Account/UpdateUsername',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data)
+        data: JSON.stringify(sendData)
     }).done(function (data) {
         alertDone('Successfully updated username! Please re-login with your username.');
         logout();
