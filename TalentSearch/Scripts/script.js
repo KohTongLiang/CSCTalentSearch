@@ -242,58 +242,117 @@ function showResults() {
 
 //to register
 $('#btnRegister').click(function () {
-    $('#feedback').text("...processing...");
 
-    //generating random code for email confirmation
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 30;
-    var confirmationCode = '';
-    for (var i = 0; i < string_length; i++) {
-        var rnum = Math.floor(Math.random() * chars.length);
-        confirmationCode += chars.substring(rnum, rnum + 1);
+    validateForm();
+
+    function validateForm() {
+        var msg = '';
+        msg += checkEmail();
+        msg += checkUsername();
+        msg += checkPass();
+        msg += checkPassEqual();
+        
+
+        if (msg == '') {
+            
+            $('#feedback').text("Processing Registration...");
+
+            //generating random code for email confirmation
+            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+            var string_length = 30;
+            var confirmationCode = '';
+            for (var i = 0; i < string_length; i++) {
+                var rnum = Math.floor(Math.random() * chars.length);
+                confirmationCode += chars.substring(rnum, rnum + 1);
+            }
+
+            //data object to be sent
+            var sendData = {
+                Email: $('#registerEmail').val(),
+                Password: $('#registerPassword1').val(),
+                ConfirmPassword: $('#registerPassword2').val(),
+                userName: $('#registerUsername').val(),
+                ConfirmationCode: confirmationCode
+            };
+
+            //if email web service successfully called, do registration service
+            $.ajax({
+                type: 'POST',
+                url: '/api/Account/Register',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(sendData)
+            }).done(function (data) {
+
+                $('#feedback').text("Successfully registered, welcome! Sending confirmation email now...");
+
+                //retrieve id  from response message
+                //id return as response message
+                //alert("Data: " + data)
+
+                //ajax call to email web service for email confirmation
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: 'msgFrom=donotreply@domaincom&msgTo=' + sendData.Email + '&msgSubject=Talent Service Email Confirmation&msgBody=Please visit https://cscass2talentsearch.azurewebsites.net/Home/ConfirmEmail/' + data + '/' + confirmationCode + ' within 20 minutes to confirm your email.',
+                    processData: false
+                }).done(function () {
+                    $('#feedback').text("Confirmation email has been sent. Redirecting you now...");
+                    window.location.replace("/home/index");
+                }).fail(function () {
+                    alert("Failed to send email.");
+                });
+
+            }).fail(function (data) {
+                $('#badInput').text("Please ensure the fields are entered properly. The Email or Username may have already been used.");
+                $('#feedback').text('');
+
+                var errormessage = '';
+
+                //$.each(data, function (key, val) {
+                //    errormesssage += val + '\n';
+                //    errormessage += "test";
+                //})
+
+                //$('#badInput').text(errormessage);
+                //alert(errormessage);
+
+                //alert("Error: " + data.responseText);
+
+            });
+
+        }
+
+        else { alert(msg);}
     }
 
-    //data object to be sent
-    var sendData = {
-        Email: $('#registerEmail').val(),
-        Password: $('#registerPassword1').val(),
-        ConfirmPassword: $('#registerPassword2').val(),
-        userName: $('#registerUsername').val(),
-        ConfirmationCode: confirmationCode
-    };
+    function checkEmail() {
+        regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (regex.test($('#registerEmail').val().trim()) == false) { return "Invalid email address. Please enter a valid email address.\n\n"; }
+        else { return ""; }
+    }
 
-    //if email web service successfully called, do registration service
-    $.ajax({
-        type: 'POST',
-        url: '/api/Account/Register',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(sendData)
-    }).done(function (data) {
+    function checkPass() {
+        regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+        if (regex.test($('#registerPassword1').val()) == false) { return "Invalid password. Ensure it is 8-16 characters in length, contains at least 1 number, and at least 1 special character.\n\n"; }
+        else { return ""; }
+    }
 
-        $('#feedback').text("Successfully registered, welcome! Sending confirmation email now...");
+    function checkPassEqual() {
+        if ($('#registerPassword1').val() == $('#registerPassword2').val())
+            return "";
+        else
+            return "Entered password is not the same as the confirmation.\n\n";
+    }
 
-        //retrieve id  from response message
-        //id return as response message
-        //alert("Data: " + data)
+    function checkUsername() {
 
-        //ajax call to email web service for email confirmation
-        $.ajax({
-            type: 'POST',
-            url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
-            contentType: 'application/x-www-form-urlencoded',
-            data: 'msgFrom=donotreply@domaincom&msgTo=' + sendData.Email + '&msgSubject=Talent Service Email Confirmation&msgBody=Please visit https://cscass2talentsearch.azurewebsites.net/Home/ConfirmEmail/' + data + '/' + confirmationCode + ' within 20 minutes to confirm your email.',
-            processData: false
-        }).done(function () {
-            $('#feedback').text("Confirmation email has been sent. Redirecting you now...");
-            window.location.replace("/home/index");
-        }).fail(function () {
-            alert("Failed to send email.");
-        });
+        if ($('#registerUsername').val().trim().length < 1)
+        { return "Invalid username.\n\n"; }
+        else { return ""; }
+    }
 
-    }).fail(function (data) {
-        $('#badInput').text("Password did not meet requirements, or email/username has already been used. Please try again.");
-        alert("Error: " + data.responseText);
-    });
+
 });
 
 //to update password

@@ -29,11 +29,11 @@ namespace TalentSearch.Controllers
 
         //captcha validation
         [HttpPost]
-        public ActionResult ValidateCaptcha()
+        public ActionResult Register()
         {
             var response = Request["g-recaptcha-response"];
             //secret that was generated in key value pair
-            const string secret = "6LdU2SUTAAAAAC4tTSY-nDl1p5lak1hptK0gT0S1";
+            const string secret = "6Leg-SUTAAAAALC9__SsZXAFDkBaXRL7nBH5ytKk";
 
             var client = new WebClient();
             var reply =
@@ -46,7 +46,14 @@ namespace TalentSearch.Controllers
             //when response is false check for the error message
             if (!captchaResponse.Success)
             {
-                if (captchaResponse.ErrorCodes.Count <= 0) return PartialView("Register");
+                try
+                {
+                    if (captchaResponse.ErrorCodes.Count <= 0) return PartialView("Register");
+                }
+                catch
+                {
+                    return Redirect("/"); //redirect back to home when there are errors - like refreshing the registration form
+                }
 
                 var error = captchaResponse.ErrorCodes[0].ToLower();
                 switch (error)
