@@ -77,31 +77,6 @@ namespace TalentSearch.Controllers
             }
 
             return View("Register");
-        }
-
-        // GET: /Home/ConfirmEmail
-        [AllowAnonymous]
-        [Route("ConfirmEmail")]
-        public ActionResult ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            //var result = await Microsoft.AspNet.Identity.UserManager.ConfirmEmailAsync(userId, code);
-            //return View(result.Succeeded ? "ConfirmEmail" : "Error");
-
-            AspNetUser user = db.AspNetUsers.ToList().Find(u => u.Id == userId);
-            TimeSpan time = new TimeSpan(0, 0, 20, 0);
-            DateTime expiryDateTime = (DateTime)user.CodeExpiry;
-            if (code == user.ConfirmationCode && expiryDateTime < (expiryDateTime.AddMinutes(time.Minutes)))
-            {
-                return View();
-            }
-            else
-            {
-                return View("Error");
-            }
-        }
+        }//end of validate captcha controller
     }//end of class
 }

@@ -360,7 +360,8 @@ namespace TalentSearch.Controllers
                 return GetErrorResult(result);
             }
 
-            return ResponseMessage(Request.CreateResponse("" + user.Id));//return user id as response message
+            //return ResponseMessage(Request.CreateResponse("" + user.Id));//return user id as response message
+            return Ok();
         }
 
         // POST api/Account/RegisterExternal
