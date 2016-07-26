@@ -1,4 +1,28 @@
-﻿function initializeNavbar() {
+﻿$('#btntest').click(function () {
+
+    alert('test');
+    var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+                      <soap:Body>\
+                        <GetWeather xmlns="http://www.webserviceX.NET">\
+                          <CityName>string</CityName>\
+                          <CountryName>string</CountryName>\
+                        </GetWeather>\
+                      </soap:Body>\
+                    </soap:Envelope>';
+
+    $.ajax("http://www.webservicex.net/globalweather.asmx", {
+
+        contentType: "application/soap+xml; charset=utf-8",
+        type: "POST", //important
+        dataType: "xml",
+        data: soapMessage
+
+    });
+
+})
+
+
+function initializeNavbar() {
     if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('username') == null) {
         $('#navright').html('<li><a data-toggle="modal" href="#registerModal"><span class="glyphicon glyphicon-user"></span> Register</a></li><li><a data-toggle="modal" href="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>');
     }
