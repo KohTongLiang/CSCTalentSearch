@@ -251,10 +251,10 @@ $('#btnRegister').click(function () {
         msg += checkUsername();
         msg += checkPass();
         msg += checkPassEqual();
-        
+
 
         if (msg == '') {
-            
+
             $('#feedback').text("Processing Registration...");
 
             //generating random code for email confirmation
@@ -271,8 +271,7 @@ $('#btnRegister').click(function () {
                 Email: $('#registerEmail').val(),
                 Password: $('#registerPassword1').val(),
                 ConfirmPassword: $('#registerPassword2').val(),
-                userName: $('#registerUsername').val(),
-                ConfirmationCode: confirmationCode
+                userName: $('#registerUsername').val()
             };
 
             //if email web service successfully called, do registration service
@@ -285,22 +284,19 @@ $('#btnRegister').click(function () {
 
                 $('#feedback').text("Successfully registered, welcome! Sending confirmation email now...");
 
-                //retrieve id  from response message
-                //id return as response message
-                //alert("Data: " + data)
-
                 //ajax call to email web service for email confirmation
                 $.ajax({
                     type: 'POST',
                     url: 'https://cscass2emailwebservice.azurewebsites.net/EmailWebService.asmx/SendGmail',
                     contentType: 'application/x-www-form-urlencoded',
-                    data: 'msgFrom=donotreply@domaincom&msgTo=' + sendData.Email + '&msgSubject=Talent Service Email Confirmation&msgBody=Please visit https://cscass2talentsearch.azurewebsites.net/Home/ConfirmEmail/' + data + '/' + confirmationCode + ' within 20 minutes to confirm your email.',
+                    data: 'msgFrom=donotreply@domaincom&msgTo=' + sendData.Email + '&msgSubject=Talent Service Email Confirmation&msgBody=Please visit https://cscass2talentsearch.azurewebsites.net/Home/Index to start using Talent Web Service.',
                     processData: false
                 }).done(function () {
                     $('#feedback').text("Confirmation email has been sent. Redirecting you now...");
                     window.location.replace("/home/index");
                 }).fail(function () {
-                    alert("Failed to send email.");
+                    $('#feedback').text("");
+                    $('#badInput').text("Email has failed to sent. System may be experiencing technical issues.");
                 });
 
             }).fail(function (data) {
@@ -323,7 +319,7 @@ $('#btnRegister').click(function () {
 
         }
 
-        else { alert(msg);}
+        else { alert(msg); }
     }
 
     function checkEmail() {
