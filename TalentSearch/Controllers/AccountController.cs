@@ -351,7 +351,7 @@ namespace TalentSearch.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email, ConfirmationCode = model.ConfirmationCode, CodeExpiry = DateTime.Now };
+            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

@@ -243,23 +243,14 @@ function showResults() {
 //to register
 $('#btnRegister').click(function () {
     $('#feedback').text("...processing...");
-
-    //generating random code for email confirmation
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 30;
-    var confirmationCode = '';
-    for (var i = 0; i < string_length; i++) {
-        var rnum = Math.floor(Math.random() * chars.length);
-        confirmationCode += chars.substring(rnum, rnum + 1);
-    }
+    $('#badInput').text("");
 
     //data object to be sent
     var sendData = {
         Email: $('#registerEmail').val(),
         Password: $('#registerPassword1').val(),
         ConfirmPassword: $('#registerPassword2').val(),
-        userName: $('#registerUsername').val(),
-        ConfirmationCode: confirmationCode
+        userName: $('#registerUsername').val()
     };
 
     //if email web service successfully called, do registration service
@@ -283,12 +274,13 @@ $('#btnRegister').click(function () {
             $('#feedback').text("Confirmation email has been sent. Redirecting you now...");
             window.location.replace("/home/index");
         }).fail(function () {
-            alert("Failed to send email.");
+            $('#feedback').text("");
+            $('#badInput').text("Email has failed to sent. System may be experiencing technical issues.");
         });
 
-    }).fail(function (data) {
+    }).fail(function () {
+        $('#feedback').text("");
         $('#badInput').text("Password did not meet requirements, or email/username has already been used. Please try again.");
-        alert("Error: " + data.responseText);
     });
 });
 

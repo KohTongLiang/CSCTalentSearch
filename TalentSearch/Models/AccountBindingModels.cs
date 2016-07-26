@@ -60,8 +60,6 @@ namespace TalentSearch.Models
         [Required]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
-
-        public string ConfirmationCode{ get; set; }
     }
 
     public class RegisterExternalBindingModel
