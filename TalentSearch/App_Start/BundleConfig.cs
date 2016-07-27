@@ -28,6 +28,12 @@ namespace TalentSearch
             bundles.Add(new ScriptBundle("~/bundles/script").Include(
                       "~/Scripts/knockout-{version}.js",
                       "~/Scripts/script.js"));
+
+
+            bundles.UseCdn = true;   //enable CDN support
+
+            //will add links to CDN and replace scriptbundle later
+
         }
     }
 }

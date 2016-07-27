@@ -23,8 +23,34 @@ namespace TalentSearch.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
+            
             return View();
+        }
+
+        public ActionResult GetWeather(string city, string country)
+        {
+            string xml = "";
+
+            using (var client = new ServiceReferenceGlobalWeather.GlobalWeatherSoapClient("GlobalWeatherSoap"))
+            {
+                var result = client.GetWeather(city, country);
+                xml = result;
+            }
+
+            return Content(xml, "text/xml");
+        }
+
+        public ActionResult GetLocation(string ip)
+        {
+            string xml = "";
+
+            using (var client = new ServiceReferenceLocation.GeoIPServiceSoapClient("GeoIPServiceSoap"))
+            {
+                var result = client.GetGeoIP(ip);
+                xml = result.ToString();
+            }
+
+            return Content(xml, "text/xml");
         }
 
         //captcha validation

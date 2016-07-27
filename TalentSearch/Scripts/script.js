@@ -1,25 +1,88 @@
-﻿$('#btntest').click(function () {
+﻿$(document).ready(function () {
 
-    alert('test');
-    var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-                      <soap:Body>\
-                        <GetWeather xmlns="http://www.webserviceX.NET">\
-                          <CityName>string</CityName>\
-                          <CountryName>string</CountryName>\
-                        </GetWeather>\
-                      </soap:Body>\
-                    </soap:Envelope>';
+    //if (geoplugin_city() == null || geoplugin_countryName() == null) {
+    //    var details = {
+    //        city: 'Singapore',
+    //        country: 'Singapore'
+    //    };
+    //}
+    //else {
+    //    var details = {
+    //        city: geoplugin_city(),
+    //        country: geoplugin_countryName()
+    //    };
+    //}
 
-    $.ajax("http://www.webservicex.net/globalweather.asmx", {
+    
+        var details = {
+            city: geoplugin_city(),
+            country: geoplugin_countryName()
+        };
 
-        contentType: "application/soap+xml; charset=utf-8",
-        type: "POST", //important
-        dataType: "xml",
-        data: soapMessage
+    $.ajax({
+        url: '/Home/GetWeather',
+        cache: false,
+        type: 'GET',
+        contentType: 'text/xml; charset=utf-8',
+        data: details,
+    }).success(function (xml) {
+        
+        var inBrackets = /\(([^)]+)\)/;
+        var matched = inBrackets.exec($(xml).find("Temperature").text());
 
+        var temperature = matched[1].replace(/[^\d.-]/g, '');
+        var weather = $(xml).find("SkyConditions").text();
+
+        $('#weather').html('It is<strong>' + weather + '</strong> in <strong>' + details.city + ', ' + details.country + '</strong> and the current temperature is <strong>' + temperature + ' &deg;C</strong>.');
     });
 
-})
+});
+
+
+$('#btntest').click(function () {
+
+    //$.getJSON('http://freegeoip.net/json/', function (data) {
+    //    alert(data);
+    //})
+
+
+
+    //$.ajax({
+    //    url: 'http://www.geoplugin.net/json.gp?ip=138.75.136.135',
+    //    cache: false,
+    //    type: 'GET',
+    //    contentType: 'application/json; charset=utf-8',
+    //}).success(function (data) {
+
+    //    alert(data);
+    //});
+//    //alert(myIP());
+
+//    alert('city: ' + geoplugin_country());
+
+//    //$.getJSON('https://jsonip.com/?callback=?', function (r) { alert(r.ip); });
+
+//    //alert('test');
+//    //var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+//    //                  <soap:Body>\
+//    //                    <GetWeather xmlns="http://www.webserviceX.NET">\
+//    //                      <CityName>string</CityName>\
+//    //                      <CountryName>string</CountryName>\
+//    //                    </GetWeather>\
+//    //                  </soap:Body>\
+//    //                </soap:Envelope>';
+
+//    //$.ajax("http://www.webservicex.net/globalweather.asmx", {
+
+//    //    contentType: "application/soap+xml; charset=utf-8",
+//    //    type: "POST", //important
+//    //    dataType: "xml",
+//    //    data: soapMessage
+
+//    //});
+
+
+});
 
 
 function initializeNavbar() {
@@ -32,7 +95,6 @@ function initializeNavbar() {
 }
 
 $(document).ready(function () {
-
 
     showResults();
     initializeNavbar();

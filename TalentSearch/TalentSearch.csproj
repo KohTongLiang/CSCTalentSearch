@@ -269,6 +269,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ServiceReferenceGlobalWeather\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServiceReferenceLocation\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +349,18 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ServiceReferenceGlobalWeather\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReferenceGlobalWeather\configuration.svcinfo" />
+    <None Include="Service References\ServiceReferenceGlobalWeather\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReferenceLocation\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReferenceLocation\configuration.svcinfo" />
+    <None Include="Service References\ServiceReferenceLocation\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -364,9 +386,15 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Views\Home\Test.cshtml" />
+    <None Include="Service References\ServiceReferenceGlobalWeather\globalweather.wsdl" />
+    <None Include="Service References\ServiceReferenceLocation\geoipservice.wsdl" />
+    <Content Include="Service References\ServiceReferenceLocation\TalentSearch.ServiceReferenceLocation.GeoIP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\IndexViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -384,6 +412,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\EmailWebService\" />
+    <WCFMetadataStorage Include="Service References\ServiceReferenceGlobalWeather\" />
+    <WCFMetadataStorage Include="Service References\ServiceReferenceLocation\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
