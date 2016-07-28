@@ -15,8 +15,8 @@
 
     
         var details = {
-            city: geoplugin_city(),
-            country: geoplugin_countryName()
+            city: 'Singapore',
+            country: 'Singapore'
         };
 
     $.ajax({
@@ -40,6 +40,25 @@
 
 
 $('#btntest').click(function () {
+
+    //navigator.geolocation.getCurrentPosition(success, error);
+
+    //function success(position) {
+    //    console.log(position.coords.latitude)
+    //    console.log(position.coords.longitude)
+
+    //    var GEOCODING = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + '%2C' + position.coords.longitude + '&language=en';
+
+    //    $.getJSON(GEOCODING).done(function (location) {
+    //        console.log(location)
+    //    })
+
+    //}
+
+    //function error(err) {
+    //    console.log(err)
+    //}
+
 
     //$.getJSON('http://freegeoip.net/json/', function (data) {
     //    alert(data);
@@ -125,7 +144,7 @@ var talentId;
 
 
 $('#addModal').on('shown.bs.modal', function (e) {
-    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('email') == null) {
+    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('username') == null) {
         alertDone('Login to access this feature');
     }
     else {
@@ -194,7 +213,7 @@ function getTalent(talentId) {
 
 //to get Id for updating
 $('#editModal').on('shown.bs.modal', function (e) {
-    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('email') == null) {
+    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('username') == null) {
         alertDone('Login to access this feature');
     }
     else {
@@ -237,7 +256,7 @@ $('#btnSave').click(function () {
 
 //to get Id for deleting
 $('#deleteModal').on('shown.bs.modal', function (e) {
-    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('email') == null) {
+    if (sessionStorage.getItem('tokenKey') == null || sessionStorage.getItem('username') == null) {
         alertDone('Login to access this feature');
     }
     else {
@@ -306,7 +325,7 @@ function showResults() {
                 output += val.Name + ' (' + val.Reknown + ')';
                 output += '</h3>';
                 output += '<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-trash"></span></button>';
-                output += '<button class="btn btn-warning pull-right" data-toggle="modal" data-target="#editModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-edit"></span></button>';
+                //output += '<button class="btn btn-warning pull-right" data-toggle="modal" data-target="#editModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-edit"></span></button>';
                 output += '<div class="clearfix"></div>';
                 output += '</div>';
                 output += '<div class="panel-body">';
