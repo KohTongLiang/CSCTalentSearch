@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using TalentSearch.Models;
@@ -21,8 +23,7 @@ namespace TalentSearch.Controllers
         [Route("api/talents")]
         public IEnumerable<Talent> GetAllTalents()
         {
-            return repository.GetAll();
-            //return db.Talents.ToList();
+            return db.Talents.ToList();
         }
 
         //Get one
@@ -31,12 +32,7 @@ namespace TalentSearch.Controllers
         [Route("api/talents/{id:int}")]
         public Talent GetTalent(int id)
         {
-            Talent talent = repository.Get(id);
-            if (talent == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-            return talent;
+            return db.Talents.ToList().Find(t => t.Id == id);
         }
 
         //Add
@@ -47,14 +43,28 @@ namespace TalentSearch.Controllers
         {
             //talent = repository.Add(talent);
 
-            db.Talents.Add(talent);
-            db.SaveChanges();
+            talent.CreatedAt = DateTime.Now;
+            talent.UpdatedAt = DateTime.Now;
 
-            var response = Request.CreateResponse<Talent>(HttpStatusCode.Created, talent);
+            try
+            {
+                db.Talents.Add(talent);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.OK, "value");
+                error.Content = new StringContent(ex.Message, Encoding.Unicode);
+                return error;
+            }
+            //var response = Request.CreateResponse<Talent>(HttpStatusCode.Created, talent);
 
-            string uri = Url.Link("AddTalent", new { id = talent.Id });
+            //string uri = Url.Link("AddTalent", new { id = talent.Id });
 
-            response.Headers.Location = new Uri(uri);
+            //response.Headers.Location = new Uri(uri);
+            //return response;
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, "value");
+            response.Content = new StringContent("Success fully added to Talents Database :)", Encoding.Unicode);
             return response;
         }
 
@@ -62,29 +72,77 @@ namespace TalentSearch.Controllers
         [Authorize]
         [HttpPut]
         [Route("api/talents/{id:int}")]
-        public void PutTalent(int id, Talent talent)
+        public HttpResponseMessage PutTalent(int id, Talent talent)
         {
-            talent.Id = id;
-            if (!repository.Update(talent))
+            try
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                Talent toUpdate = db.Talents.ToList().Find(t => t.Id == id);
+                toUpdate.Name = talent.Name;
+                toUpdate.ShortName = talent.ShortName;
+                toUpdate.Bio = talent.Bio;
+                toUpdate.ImageLink = talent.ImageLink;
+                toUpdate.Reknown = talent.Reknown;
+                toUpdate.UpdatedBy = talent.UpdatedBy;
+                toUpdate.UpdatedAt = DateTime.Now;
+                db.SaveChanges();
             }
-        }
+            catch (Exception ex)
+            {
+                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.OK, "value");
+                error.Content = new StringContent(ex.Message, Encoding.Unicode);
+                return error;
+            }
 
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, "value");
+            response.Content = new StringContent("Success fully updated to Talents Database :)", Encoding.Unicode);
+            return response;
+        }
+        
         //Delete
         [Authorize]
         [HttpDelete]
         [Route("api/talents/{id:int}")]
-        public void DeleteTalent(int id)
+        public HttpResponseMessage Talents(int id)
         {
-            Talent talent = repository.Get(id);
-            if (talent == null)
+            try
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                db.Talents.Remove(db.Talents.ToList().Find(t => t.Id == id));
+                db.SaveChanges();
             }
-
-            repository.Remove(id);
+            catch (Exception ex)
+            {
+                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.OK, "value");
+                error.Content = new StringContent(ex.Message, Encoding.Unicode);
+                return error;
+            }
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, "value");
+            response.Content = new StringContent("Success deleted talent from Talents Database :)", Encoding.Unicode);
+            return response;
         }
+
+        ////Delete
+        //[Authorize]
+        //[HttpPut]
+        //[Route("api/talents/{id:int}/{para}")]
+        //public HttpResponseMessage Talents(int id, string deletedBy)
+        //{
+        //    try
+        //    {
+        //        Talent toDelete = db.Talents.ToList().Find(t => t.Id == id);
+        //        toDelete.DeletedBy = deletedBy;
+        //        toDelete.DeletedAt = DateTime.Now;
+        //        db.SaveChanges();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.OK, "value");
+        //        error.Content = new StringContent(ex.Message, Encoding.Unicode);
+        //        return error;
+        //    }
+        //    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, "value");
+        //    response.Content = new StringContent("Success deleted talent from Talents Database :)", Encoding.Unicode);
+        //    return response;
+        //}
 
     }
 }

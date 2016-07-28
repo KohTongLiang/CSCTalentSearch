@@ -26,8 +26,5 @@ namespace TalentSearch.Models
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> DeletedAt { get; set; }
         public string DeletedBy { get; set; }
-    
-        public virtual Talent Talents1 { get; set; }
-        public virtual Talent Talent1 { get; set; }
     }
 }

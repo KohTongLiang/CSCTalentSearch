@@ -13,11 +13,11 @@
     //    };
     //}
 
-    
-        var details = {
-            city: 'Singapore',
-            country: 'Singapore'
-        };
+
+    var details = {
+        city: 'Singapore',
+        country: 'Singapore'
+    };
 
     $.ajax({
         url: '/Home/GetWeather',
@@ -26,7 +26,7 @@
         contentType: 'text/xml; charset=utf-8',
         data: details,
     }).success(function (xml) {
-        
+
         var inBrackets = /\(([^)]+)\)/;
         var matched = inBrackets.exec($(xml).find("Temperature").text());
 
@@ -75,30 +75,30 @@ $('#btntest').click(function () {
 
     //    alert(data);
     //});
-//    //alert(myIP());
+    //    //alert(myIP());
 
-//    alert('city: ' + geoplugin_country());
+    //    alert('city: ' + geoplugin_country());
 
-//    //$.getJSON('https://jsonip.com/?callback=?', function (r) { alert(r.ip); });
+    //    //$.getJSON('https://jsonip.com/?callback=?', function (r) { alert(r.ip); });
 
-//    //alert('test');
-//    //var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-//    //                  <soap:Body>\
-//    //                    <GetWeather xmlns="http://www.webserviceX.NET">\
-//    //                      <CityName>string</CityName>\
-//    //                      <CountryName>string</CountryName>\
-//    //                    </GetWeather>\
-//    //                  </soap:Body>\
-//    //                </soap:Envelope>';
+    //    //alert('test');
+    //    //var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+    //    //                  <soap:Body>\
+    //    //                    <GetWeather xmlns="http://www.webserviceX.NET">\
+    //    //                      <CityName>string</CityName>\
+    //    //                      <CountryName>string</CountryName>\
+    //    //                    </GetWeather>\
+    //    //                  </soap:Body>\
+    //    //                </soap:Envelope>';
 
-//    //$.ajax("http://www.webservicex.net/globalweather.asmx", {
+    //    //$.ajax("http://www.webservicex.net/globalweather.asmx", {
 
-//    //    contentType: "application/soap+xml; charset=utf-8",
-//    //    type: "POST", //important
-//    //    dataType: "xml",
-//    //    data: soapMessage
+    //    //    contentType: "application/soap+xml; charset=utf-8",
+    //    //    type: "POST", //important
+    //    //    dataType: "xml",
+    //    //    data: soapMessage
 
-//    //});
+    //    //});
 
 
 });
@@ -154,20 +154,21 @@ $('#addModal').on('shown.bs.modal', function (e) {
 //to add
 $('#btnAdd').click(function () {
 
+    alert("adding to db");
+
     if ($("#addName").val().trim().length == 0 || $("#addShortName").val().trim().length == 0 || $("#addReknown").val().trim().length == 0 || $("#addImage").val().trim().length == 0 || $("#addBio").val().trim().length == 0) {
         alert('Please fill in the information.');
     }
 
     else {
-
         var talent = {
             Name: $('#addName').val(),
             ShortName: $('#addShortName').val(),
             Reknown: $('#addReknown').val(),
             Bio: $('#addBio').val(),
-            ImageLink: $('#addImage').file(),
-            CreatedBy: sessionStorage.getItem('email'),
-            UpdatedBy: sessionStorage.getItem('email')
+            ImageLink: $('#addImage').val(),
+            CreatedBy: sessionStorage.getItem('username'),
+            UpdatedBy: sessionStorage.getItem('username')
         };
 
         $.ajax({
@@ -177,19 +178,15 @@ $('#btnAdd').click(function () {
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(talent),
-            //success: function () {
-            //    hideModal();
-            //}
             statusCode: {
                 201: function () {
                     hideModal();
                 }
             }
         }).success(function (data) {
-            alert(success);
-            window.location.replace(data);
+            hideModal();
+            window.location.reload();
         });
-
     }
 });
 
@@ -224,6 +221,7 @@ $('#editModal').on('shown.bs.modal', function (e) {
 
 //to update
 $('#btnSave').click(function () {
+    alert("updating...");
 
     if ($("#editName").val().trim().length == 0 || $("#editShortName").val().trim().length == 0 || $("#editReknown").val().trim().length == 0 || $("#editImage").val().trim().length == 0 || $("#editBio").val().trim().length == 0) {
         alert('Please fill in the information.');
@@ -236,7 +234,8 @@ $('#btnSave').click(function () {
             ShortName: $('#editShortName').val(),
             Reknown: $('#editReknown').val(),
             Bio: $('#editBio').val(),
-            ImageLink: $('#editImage').val()
+            ImageLink: $('#editImage').val(),
+            UpdatedBy: sessionStorage.getItem("username")
         };
 
         $.ajax({
@@ -249,7 +248,9 @@ $('#btnSave').click(function () {
             success: function () {
                 hideModal();
             }
-        })
+        }).done(function (response) {
+            alert(response);
+        });
     }
 });
 
@@ -271,15 +272,15 @@ $('#btnDelete').click(function () {
         url: '/api/talents/' + talentId,
         headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('tokenKey') },
         cache: false,
-        type: 'DELETE',
+        type: 'Delete',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             hideModal();
         }
-    })
-
+    }).done(function (data) {
+        alert(data);
+    });
 });
-
 
 
 
@@ -294,7 +295,6 @@ function showResults() {
     $.getJSON('/api/talents', function (data) {
 
         //Example of generated result
-
         //<div class="row col-md-10 col-md-offset-1">
         //    <div class="panel panel-default">
         //        <div class="panel-heading">
@@ -324,8 +324,10 @@ function showResults() {
                 output += '<h3 class="panel-title pull-left">';
                 output += val.Name + ' (' + val.Reknown + ')';
                 output += '</h3>';
+                // 
+                //onclick="update(' + val + ')"
                 output += '<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-trash"></span></button>';
-                //output += '<button class="btn btn-warning pull-right" data-toggle="modal" data-target="#editModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-edit"></span></button>';
+                output += '<button class="btn btn-warning pull-right" data-toggle="modal" data-target="#editModal" data-talentid="' + val.Id + '"><span class="glyphicon glyphicon-edit"></span></button>';
                 output += '<div class="clearfix"></div>';
                 output += '</div>';
                 output += '<div class="panel-body">';
@@ -334,8 +336,14 @@ function showResults() {
                 output += '</div>';
                 output += '</div>';
                 output += '</div>';
-
             }
+
+            $('#editName').val(val.Name);
+            $('#editShortName').val(val.ShortName);
+            $('#editReknown').val(val.Reknown);
+            $('#editImage').val(val.ImageLink);
+            $('#editBio').val(val.Bio);
+
         });
 
         $('#results').html(output);

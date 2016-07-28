@@ -65,8 +65,6 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="ConfirmationCode" Type="nvarchar" MaxLength="30" />
-          <Property Name="CodeExpiry" Type="datetime" />
         </EntityType>
         <EntityType Name="Talents">
           <Key>
@@ -153,18 +151,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Talents_Talents">
-          <End Role="Talents" Type="Self.Talents" Multiplicity="1" />
-          <End Role="Talents1" Type="Self.Talents" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Talents">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Talents1">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CSCAssignment2ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -192,10 +178,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Talents_Talents" Association="Self.FK_Talents_Talents">
-            <End Role="Talents" EntitySet="Talents" />
-            <End Role="Talents1" EntitySet="Talents" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -258,8 +240,6 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ConfirmationCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CodeExpiry" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_Talent" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
@@ -282,8 +262,6 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Talents1" Relationship="Self.FK_Talents_Talents" FromRole="Talents" ToRole="Talents1" />
-          <NavigationProperty Name="Talent1" Relationship="Self.FK_Talents_Talents" FromRole="Talents1" ToRole="Talents" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -325,18 +303,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Talents_Talents">
-          <End Role="Talents" Type="Self.Talent" Multiplicity="1" />
-          <End Role="Talents1" Type="Self.Talent" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Talents">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Talents1">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -359,10 +325,6 @@
           <AssociationSet Name="FK_AspNetUsers_Talent" Association="Self.FK_AspNetUsers_Talent">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Talents_Talents" Association="Self.FK_Talents_Talents">
-            <End Role="Talents" EntitySet="Talents" />
-            <End Role="Talents1" EntitySet="Talents" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -427,8 +389,6 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ConfirmationCode" ColumnName="ConfirmationCode" />
-                <ScalarProperty Name="CodeExpiry" ColumnName="CodeExpiry" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
