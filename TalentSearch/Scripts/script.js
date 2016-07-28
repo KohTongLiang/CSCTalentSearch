@@ -13,11 +13,14 @@
     //    };
     //}
 
-    
-        var details = {
-            city: geoplugin_city(),
-            country: geoplugin_countryName()
-        };
+
+
+    var details = {
+        //city: g.geoplugin_city(),
+        //country: g.geoplugin_countryName()
+        city: 'Singapore',
+        country: 'Singapore'
+    };
 
     $.ajax({
         url: '/Home/GetWeather',
@@ -26,7 +29,7 @@
         contentType: 'text/xml; charset=utf-8',
         data: details,
     }).success(function (xml) {
-        
+
         var inBrackets = /\(([^)]+)\)/;
         var matched = inBrackets.exec($(xml).find("Temperature").text());
 
@@ -56,30 +59,30 @@ $('#btntest').click(function () {
 
     //    alert(data);
     //});
-//    //alert(myIP());
+    //    //alert(myIP());
 
-//    alert('city: ' + geoplugin_country());
+    //    alert('city: ' + geoplugin_country());
 
-//    //$.getJSON('https://jsonip.com/?callback=?', function (r) { alert(r.ip); });
+    //    //$.getJSON('https://jsonip.com/?callback=?', function (r) { alert(r.ip); });
 
-//    //alert('test');
-//    //var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-//    //                  <soap:Body>\
-//    //                    <GetWeather xmlns="http://www.webserviceX.NET">\
-//    //                      <CityName>string</CityName>\
-//    //                      <CountryName>string</CountryName>\
-//    //                    </GetWeather>\
-//    //                  </soap:Body>\
-//    //                </soap:Envelope>';
+    //    //alert('test');
+    //    //var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+    //    //                  <soap:Body>\
+    //    //                    <GetWeather xmlns="http://www.webserviceX.NET">\
+    //    //                      <CityName>string</CityName>\
+    //    //                      <CountryName>string</CountryName>\
+    //    //                    </GetWeather>\
+    //    //                  </soap:Body>\
+    //    //                </soap:Envelope>';
 
-//    //$.ajax("http://www.webservicex.net/globalweather.asmx", {
+    //    //$.ajax("http://www.webservicex.net/globalweather.asmx", {
 
-//    //    contentType: "application/soap+xml; charset=utf-8",
-//    //    type: "POST", //important
-//    //    dataType: "xml",
-//    //    data: soapMessage
+    //    //    contentType: "application/soap+xml; charset=utf-8",
+    //    //    type: "POST", //important
+    //    //    dataType: "xml",
+    //    //    data: soapMessage
 
-//    //});
+    //    //});
 
 
 });
@@ -95,6 +98,50 @@ function initializeNavbar() {
 }
 
 $(document).ready(function () {
+    var geocoder = new google.maps.Geocoder();
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successFunction);
+    }
+    //Get latitude and longitude;
+    function successFunction(position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        //alert("Lat: " + lat + "Long: " + long);
+    }
+
+    function codeLatLng(lat, lng) {
+
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log(results)
+                if (results[1]) {
+                    //formatted address
+                    alert(results[0].formatted_address)
+                    //find country name
+                    for (var i = 0; i < results[0].address_components.length; i++) {
+                        for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+                            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                            if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                //this is the object you are looking for
+                                city = results[0].address_components[i];
+                                break;
+                            }
+                        }
+                    }
+                    //city data
+                    alert(city.short_name + " " + city.long_name)
+
+
+                } else {
+                    alert("No results found");
+                }
+            } else {
+                alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
 
     showResults();
     initializeNavbar();
