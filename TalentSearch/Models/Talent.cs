@@ -24,7 +24,5 @@ namespace TalentSearch.Models
         public string CreatedBy { get; set; }
         public System.DateTime UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> DeletedAt { get; set; }
-        public string DeletedBy { get; set; }
     }
 }

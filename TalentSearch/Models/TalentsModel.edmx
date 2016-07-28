@@ -80,8 +80,6 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="DeletedAt" Type="datetime" />
-          <Property Name="DeletedBy" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <Association Name="FK_AspNetUsers_Talent">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -260,8 +258,6 @@
           <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -405,8 +401,6 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

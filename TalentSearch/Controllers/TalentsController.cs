@@ -97,7 +97,7 @@ namespace TalentSearch.Controllers
             response.Content = new StringContent("Success fully updated to Talents Database :)", Encoding.Unicode);
             return response;
         }
-        
+
         //Delete
         [Authorize]
         [HttpDelete]
