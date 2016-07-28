@@ -8,32 +8,26 @@ namespace TalentSearch
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.UseCdn = true;   //enable CDN support
+            BundleTable.EnableOptimizations = true;
+            
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "https://code.jquery.com/jquery-1.12.4.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/modernizr", "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
                       "~/Content/site.css",
                       "~/Content/style.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/script").Include(
-                      "~/Scripts/knockout-{version}.js",
                       "~/Scripts/script.js"));
+            
 
-
-            bundles.UseCdn = true;   //enable CDN support
-
-            //will add links to CDN and replace scriptbundle later
-
+            
         }
     }
 }
